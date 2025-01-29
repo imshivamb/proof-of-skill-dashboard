@@ -1,8 +1,7 @@
-// components/Dashboard/SkillMatrix.tsx
 import { getSkillColor } from "@/lib/colors";
 import { User, UserDetails } from "@/types";
-import { Filter } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
+import { FilterDropdown } from "./FilterDropdown";
 
 interface SkillMatrixProps {
   selectedUsers: string[];
@@ -18,6 +17,7 @@ export const SkillMatrix = ({
   const [view, setView] = useState<"compare" | "individual" | "shortlisted">(
     "compare"
   );
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const getAllSkills = () => {
     const skills = new Set<string>();
     selectedUsers.forEach((userId) => {
@@ -49,6 +49,7 @@ export const SkillMatrix = ({
   };
 
   const skills = getAllSkills();
+  const displaySkills = selectedSkills.length > 0 ? selectedSkills : skills;
 
   return (
     <div className="flex-1 pl-8 overflow-x-auto">
@@ -82,10 +83,10 @@ export const SkillMatrix = ({
         </div>
         <div>
           <div className="flex gap-2 justify-center">
-            <button className="p-2 font-bold shadow-lg border border-black">
+            <button className="p-2 px-3 font-bold border-2 border-black bg-white transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[0_0_0_0_#000000] shadow-[4px_4px_0_0_#000000]">
               ←
             </button>
-            <button className="p-2 shadow-lg font-bold  border border-black">
+            <button className="p-2 px-3 font-bold border-2 border-black bg-white transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[0_0_0_0_#000000] shadow-[4px_4px_0_0_#000000]">
               →
             </button>
           </div>
@@ -96,13 +97,12 @@ export const SkillMatrix = ({
         <table className="border-separate border-spacing-1">
           <thead>
             <tr>
-              <th className="text-left p-2 w-48 sticky left-0 bg-inherit">
-                <button className="px-3 w-36 justify-between py-1 bg-[#f6f6ef] border border-black flex items-center gap-2">
-                  Filter{" "}
-                  <span>
-                    <Filter className="w-5 h-5" />
-                  </span>
-                </button>{" "}
+              <th className="text-left p-2 w-48 sticky left-0 bg-inherit z-40">
+                <FilterDropdown
+                  allSkills={skills}
+                  selectedSkills={selectedSkills}
+                  onSkillsChange={setSelectedSkills}
+                />
               </th>
               {selectedUsers.map((userId) => (
                 <th key={userId} className="p-1 align-bottom">
@@ -114,7 +114,7 @@ export const SkillMatrix = ({
             </tr>
           </thead>
           <tbody>
-            {skills.map((skillName) => (
+            {displaySkills.map((skillName) => (
               <tr key={skillName}>
                 <td className="text-sm text-gray-800 h-6 pl-2 sticky left-0 bg-inherit whitespace-nowrap">
                   {skillName}
