@@ -1,4 +1,4 @@
-// components/Dashboard/SkillMatrix.tsx
+
 import { getSkillColor } from "@/lib/colors";
 import { User, UserDetails } from "@/types";
 import { Filter } from "lucide-react";
