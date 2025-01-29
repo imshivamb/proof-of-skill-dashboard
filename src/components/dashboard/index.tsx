@@ -52,7 +52,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 pl-0 pr-6">
       {/* Header */}
-      <div className="max-w-[1460px] mb-5 mt-8 mx-auto">
+      <div className="max-w-[1300px] mb-5 mt-8 mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => window.history.back()}
